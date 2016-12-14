@@ -1,5 +1,7 @@
 require 'sinatra'
+require 'sinatra/reloader'
 
 get '/' do
-  "Hello,World."
+    @title = "shooting"
+  erb :index
 end
