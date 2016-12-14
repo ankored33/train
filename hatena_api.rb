@@ -1,14 +1,17 @@
+
+class Hatena
+
 require 'open-uri'
 require 'json'
 
+def bookmark(url) 
 
 opt = {}
 opt['User-Agent'] = 'Opera/9.80 (Windows NT 5.1; U; ja) Presto/2.7.62 Version/11.01 ' #User-Agent偽装
 
-
 #はてなAPIから返るjsonをハッシュ化 
-p "読み込みたいURLを入力してください。"
-url = gets.to_s
+
+
 uri = "http://b.hatena.ne.jp/entry/json/?url=#{url}" #URLを必要に応じて変更
 uri_esc = URI.escape(uri) 
 io = open(uri_esc, opt)
@@ -16,10 +19,13 @@ hash = JSON.load(io)
 
 bkm = hash["bookmarks"]
 eid = hash["eid"].to_s
- 
+i = 0 
+v = bkm.size
+
 for var in bkm do
     timestamp = var["timestamp"].delete("/")[0,8].to_s
     user = var["user"]
+
 
     #ブコメパーマリンク生成
     starurl = "http://s.hatena.com/entry.json?uri=http://b.hatena.ne.jp/#{user}/#{timestamp}#bookmark-#{eid}"
@@ -64,8 +70,18 @@ for var in bkm do
   var["p_star"] = p_star
   var["s_power"] = s_power
   var["icon"] = "http://www.hatena.com/users/#{user[0,2]}/#{user}/profile.gif"
+  i += 1
+  puts "ブクマ読み込み中... #{i} / #{v}"
 end #for文のend
-puts bkm
+
+end 
+end
+
+hatena = Hatena.new
+p "URLを入力して下さい"
+s = gets.to_s
+puts hatena.bookmark(s)
+
 
 #ブコメのスター数を返すAPI
 #http://s.hatena.com/entry.json?uri={ブコメのパーマリンク}
