@@ -2,16 +2,20 @@ require 'open-uri'
 require 'json'
 
 
+opt = {}
+opt['User-Agent'] = 'Opera/9.80 (Windows NT 5.1; U; ja) Presto/2.7.62 Version/11.01 ' #User-Agent偽装
 
-  opt = {}
-  opt['User-Agent'] = 'Opera/9.80 (Windows NT 5.1; U; ja) Presto/2.7.62 Version/11.01 ' #User-Agent偽装
 
 #はてなAPIから返るjsonをハッシュ化 
-uri = 'http://b.hatena.ne.jp/entry/json/?url=http://anond.hatelabo.jp/20161206134710' #URLを必要に応じて変更
-  io = open(uri, opt)
-  hash = JSON.load(io)
-  bkm = hash["bookmarks"]
-  eid = hash["eid"].to_s
+p "読み込みたいURLを入力してください。"
+url = gets.to_s
+uri = "http://b.hatena.ne.jp/entry/json/?url=#{url}" #URLを必要に応じて変更
+uri_esc = URI.escape(uri) 
+io = open(uri_esc, opt)
+hash = JSON.load(io)
+
+bkm = hash["bookmarks"]
+eid = hash["eid"].to_s
  
 for var in bkm do
     timestamp = var["timestamp"].delete("/")[0,8].to_s
@@ -28,7 +32,7 @@ for var in bkm do
 
   #["colored_stars"]を探索して色ごとに配列に突っ込む
   colorstars = Array.new
-  if hash_s["entries"].empty? == false #53のような["entries"]が空の人用のif文
+  if hash_s["entries"].empty? == false #["entries"]が空の人用のif文
     x = hash_s["entries"][0]["colored_stars"]
     if x != nil
       for var_s in x do
@@ -59,8 +63,9 @@ for var in bkm do
   var["b_star"] = b_star
   var["p_star"] = p_star
   var["s_power"] = s_power
+  var["icon"] = "http://www.hatena.com/users/#{user[0,2]}/#{user}/profile.gif"
 end #for文のend
-p bkm
+puts bkm
 
 #ブコメのスター数を返すAPI
 #http://s.hatena.com/entry.json?uri={ブコメのパーマリンク}
@@ -68,8 +73,12 @@ p bkm
 #ブコメのパーマリンク
 #http://b.hatena.ne.jp/{ユーザーID}/{コメントの日付(YYYYMMDD)}#bookmark-{エントリーID}
 
+#アイコンリンク
+#http://cdn1.www.st-hatena.com/users/{ユーザーIDの頭2文字}/{ユーザーID}/profile.gif
+
 #URI.escape(url)
 
 
 #次やること
 #def をつかう
+
