@@ -1,1 +1,1 @@
-ruby main.rb -p $PORT -o $IP
+ruby app.rb -p $PORT -o $IP
