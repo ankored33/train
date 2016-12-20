@@ -17,6 +17,7 @@
   <script type="text/javascript">
     $(function(){
       $("#submit").click(function(){
+        var bkmData = {}
         var foo = $("#foo").val();
         var bar = $("#bar").val();
         var request = $.ajax({
@@ -30,6 +31,8 @@
         //以下、コールバック関数で戻り値を受け取り、id="result"に表示
         success: function(json) {
         dataType: "json",  //dataTypeをちゃんと指定する
+        bkmData = JSON.parse(json);
+        console.log(bkmData);
         $('#result').append(json);
         },
         error: function() {
