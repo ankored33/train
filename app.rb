@@ -71,6 +71,9 @@ post '/post' do
     var["p_star"] = p_star
     var["s_power"] = s_power
     var["icon"] = "http://www.hatena.com/users/#{user[0,2]}/#{user}/profile.gif"
+    var.delete("tags")
+    var.delete("timestamp")
+    
     i += 1
     loadmsg = "ブクマ読み込み中... #{i} / #{v}"
   end #for文のend  

@@ -1,9 +1,4 @@
 
-
-
-
-
-
 // - global -------------------------------------------------------------------
 var screenCanvas, info;
 var run = true;
@@ -16,8 +11,8 @@ window.onload = function(){
 
     // スクリーンの初期化
     screenCanvas = document.getElementById('screen');
-    screenCanvas.width = 256;
-    screenCanvas.height = 256;
+    screenCanvas.width = 384;
+    screenCanvas.height = 512;
 
     // 2dコンテキスト
     ctx = screenCanvas.getContext('2d');

@@ -1,22 +1,23 @@
-  <!--データ入力フォーム-->
-  <input type="text" id="url">
-  <input id="submit" type="button" value="submit">
-  <p id="result"></p>
-
   <div id="container">
-        <canvas id="screen"></canvas>
+    <!--データ入力フォーム-->
+    <input type="text" id="url">
+    <input id="submit" type="button" value="SALLY!!">
+    
+    <!--ゲーム描画-->
+    <p id="result">URLを入れてボタンを押してください</p>
+    <canvas id="screen"></canvas>
     <p id="info"></p>
-    <p id="result"></p>
   </div>
-
+    <p id="gamedata"></p>
   <!--jQuery召喚-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
   
   <!--submitボタンをおすと以下のAjax通信-->
   <script type="text/javascript">
+    var bkmData = {};
     $(function(){
       $("#submit").click(function(){
-        var bkmData = {}
+
         var url = $("#url").val();
         var request = $.ajax({
           type: "POST",
@@ -30,10 +31,11 @@
         dataType: "json",  //dataTypeをちゃんと指定する
         bkmData = JSON.parse(json);
         console.log(bkmData);
-        $('#result').append(json);
+        $('#result').text("STAGE: " + url);
+        $('#gamedata').text(json);
         },
         error: function() {
-        $('#result').append('error');
+        $('#result').text('error はてなブックマークのついたページのURLを入れてください');
         }
         });
       });
