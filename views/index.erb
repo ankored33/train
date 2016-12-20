@@ -1,6 +1,5 @@
   <!--データ入力フォーム-->
-  <input type="text" id="foo">
-  <input type="text" id="bar">
+  <input type="text" id="url">
   <input id="submit" type="button" value="submit">
   <p id="result"></p>
 
@@ -18,15 +17,13 @@
     $(function(){
       $("#submit").click(function(){
         var bkmData = {}
-        var foo = $("#foo").val();
-        var bar = $("#bar").val();
+        var url = $("#url").val();
         var request = $.ajax({
           type: "POST",
           url: "/post",
           dataType: "text", //dataTypeをちゃんと指定する
           data: {
-            foo: foo,
-            bar: bar
+            url: url,
           },
         //以下、コールバック関数で戻り値を受け取り、id="result"に表示
         success: function(json) {
