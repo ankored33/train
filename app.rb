@@ -1,12 +1,24 @@
 require 'sinatra'
 require 'sinatra/reloader'
-
+require 'json'
 
 get '/' do
   erb :index
 end
 
+post '/post' do
+  #ここで入力データを処理する
+  foo = params[:foo]
+  bar = params[:bar]
+  data = {
+    "foo" => foo,
+    "bar" => bar
+  }
+  content_type :json
+  @data = data.to_json  
+end
 
+=begin
 post '/' do
 
   opt = {}
@@ -72,29 +84,20 @@ post '/' do
     var["s_power"] = s_power
     var["icon"] = "http://www.hatena.com/users/#{user[0,2]}/#{user}/profile.gif"
     i += 1
-    #puts "ブクマ読み込み中... #{i} / #{v}"
+    @loadmsg = "ブクマ読み込み中... #{i} / #{v}"
   end #for文のend  
   
   
-  erb :index
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-=begin
-post '/' do
-  @url = @params[:url]
-  erb :index
 end
 =end
+
+
+
+
+
+
+
+
+
+
 
