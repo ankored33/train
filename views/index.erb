@@ -15,17 +15,20 @@
   <!--submitボタンをおすと以下のAjax通信-->
   <script type="text/javascript">
     var bkmData = {};
+    var readmsg = {};
+    var preload = "読み込み中 <img height='16px' width='16px' src='/img/prelorder/Preloader_" + Math.floor( Math.random() * 11 ) + ".gif'>";
     $(function(){
       $("#submit").click(function(){
-
         var url = $("#url").val();
-        var request = $.ajax({
+        $('#result').html(preload);
+        $.ajax({
           type: "POST",
           url: "/post",
           dataType: "text", //dataTypeをちゃんと指定する
           data: {
             url: url,
           },
+
         //以下、コールバック関数で戻り値を受け取り、id="result"に表示
         success: function(json) {
         dataType: "json",  //dataTypeをちゃんと指定する
@@ -40,4 +43,26 @@
         });
       });
     });
+/*
+        function disp(){
+          $.ajax({
+            type: "POST",
+            url: "/post/back",
+            dataType: "text",
+            success: function(res) {
+            dataType: "json",  //dataTypeをちゃんと指定する
+            readmsg = JSON.parse(res);
+            console.log(res);
+              $('#result').text("読み込み中..." + res);
+            },
+            error: function() {
+            $('#result').text('error');
+            }
+          });
+          setTimeout(function() {disp()},2000);
+          }
+        $(disp());        
+*/    
+    
   </script>
+  

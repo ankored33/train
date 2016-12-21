@@ -75,18 +75,12 @@ post '/post' do
     var.delete("timestamp")
     
     i += 1
-    loadmsg = "ブクマ読み込み中... #{i} / #{v}"
+    @loadmsg = {now: i, max: v}
   end #for文のend  
 
   content_type :json
   @data = bkm.to_json  
 end
-
-
-  
-  
-
-
 
 
 
